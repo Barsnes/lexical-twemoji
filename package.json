@@ -1,0 +1,17 @@
+{
+  "name": "@barsnes/lexical-twemoji-repo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "app"
+  ],
+  "devDependencies": {
+    "@types/react": "^18.2.45",
+    "react": "^18.2.0"
+  },
+  "dependencies": {
+    "@lexical/react": "^0.12.5",
+    "lexical": "^0.12.5"
+  }
+}
