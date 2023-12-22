@@ -21,5 +21,19 @@
   },
   "devDependencies": {
     "@types/react": "^18.2.45"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Barsnes/lexical-twemoji.git"
+  },
+  "keywords": [
+    "lexical",
+    "twemoji"
+  ],
+  "author": "Barsnes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Barsnes/lexical-twemoji/issues"
+  },
+  "homepage": "https://github.com/Barsnes/lexical-twemoji#readme"
 }
