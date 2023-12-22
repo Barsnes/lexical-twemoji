@@ -11,8 +11,11 @@ import {
   LexicalTwemojiNode,
 } from "@barsnes/lexical-twemoji";
 
-<LexicalComposer>
-  ...other plguins
+const initialConfig = {
+  nodes: [LexicalTwemojiNode],
+};
+
+<LexicalComposer initialConfig={initialConfig}>
   <LexicalTwemojiPlugin />
 </LexicalComposer>;
 ```

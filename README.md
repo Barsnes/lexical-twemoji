@@ -8,11 +8,18 @@ Lexical plugin that makes all emojis a [twemoji](https://twemoji.twitter.com/con
 The plugin does not provide any emoji pickers. It listens for changes on `TextNode`s, and parses them for any inserted emojis.
 
 ## Usage
-```jsx
-import { LexicalTwemojiPlugin, LexicalTwemojiNode } from "@barsnes/lexical-twemoji";
 
-<LexicalComposer>
-  ...other plguins
+```jsx
+import {
+  LexicalTwemojiPlugin,
+  LexicalTwemojiNode,
+} from "@barsnes/lexical-twemoji";
+
+const initialConfig = {
+  nodes: [LexicalTwemojiNode],
+};
+
+<LexicalComposer initialConfig={initialConfig}>
   <LexicalTwemojiPlugin />
-</LexicalComposer>
+</LexicalComposer>;
 ```
