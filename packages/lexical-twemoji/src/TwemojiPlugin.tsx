@@ -8,7 +8,7 @@ import { $createTwemojiNode } from "./TwemojiNode";
 const regex = emojiRegex();
 function TwemojiTransform(node: TextNode, editor: LexicalEditor) {
   const textContent = node.getTextContent();
-
+	const nodes = [];
   const emojis = textContent.match(regex);
 
   if (emojis) {
@@ -16,7 +16,7 @@ function TwemojiTransform(node: TextNode, editor: LexicalEditor) {
       textContent.indexOf(emojis[0]) + emojis[0].length
     );
     if (textAfter.length === 0) {
-      textAfter = "W";
+      textAfter = "\\‰}";
     }
 
     const textBeforeNode = new TextNode(
@@ -37,7 +37,7 @@ function TwemojiTransform(node: TextNode, editor: LexicalEditor) {
       {
         onUpdate: () => {
           editor.update(() => {
-            if (textAfter === "W") {
+            if (textAfter === "\\‰}") {
               textAfterNode.remove();
             }
           });

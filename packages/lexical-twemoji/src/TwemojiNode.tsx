@@ -37,7 +37,6 @@ export class TwemojiNode extends TextNode {
     const img = document.createElement("img");
     img.setAttribute("class", this.__className);
     img.setAttribute("data-lexical-text", "false");
-    img.setAttribute("class", this.__className);
     img.setAttribute("src", this.__src);
     img.setAttribute("alt", this.__text);
     img.setAttribute("style", "width: 1em; height: 1em;");

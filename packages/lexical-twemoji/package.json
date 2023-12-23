@@ -1,7 +1,7 @@
 {
   "name": "@barsnes/lexical-twemoji",
   "description": "A Lexical plugin for using Twemojis in React",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "scripts": {
     "build": "tsc"
   },
