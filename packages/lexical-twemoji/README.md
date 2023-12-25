@@ -1,3 +1,5 @@
+### [Demo](https://lexical-twemoji.barsnes.dev/)
+
 # Lexical Twemoji plugin
 
 Lexical plugin that makes all emojis a [twemoji](https://twemoji.twitter.com/content/twemoji-twitter/en.html).
