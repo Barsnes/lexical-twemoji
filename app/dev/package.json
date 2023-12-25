@@ -1,5 +1,5 @@
 {
-  "name": "test-packages",
+  "name": "dev",
   "description": "This App is used to test the packages that are created by me in this repository.",
   "version": "0.1.0",
   "private": true,

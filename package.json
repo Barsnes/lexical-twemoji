@@ -4,10 +4,10 @@
   "private": true,
   "workspaces": [
     "packages/*",
-    "app"
+    "app/*"
   ],
   "scripts": {
-    "start": "npm -w app start",
+    "start": "npm -w app/dev start",
     "build": "npm -w packages/lexical-twemoji run build"
   },
   "devDependencies": {
