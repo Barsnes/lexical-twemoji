@@ -6,7 +6,11 @@ import emojiRegex from "emoji-regex";
 import { $createTwemojiNode } from "./TwemojiNode";
 
 const regex = emojiRegex();
-function TwemojiTransform(node: TextNode, editor: LexicalEditor) {
+function TwemojiTransform(
+  node: TextNode,
+  editor: LexicalEditor,
+  twemojiOptions: TwemojiOptions
+) {
   const textContent = node.getTextContent();
   const nodes = [];
   const emojis = textContent.match(regex);
@@ -25,7 +29,11 @@ function TwemojiTransform(node: TextNode, editor: LexicalEditor) {
           nodes.push(new TextNode(text));
         }
         nodes.push(
-          $createTwemojiNode("lexical-twemoji", emoji, parseEmoji(emoji))
+          $createTwemojiNode(
+            "lexical-twemoji",
+            emoji,
+            parseEmoji(emoji, twemojiOptions)
+          )
         );
       });
     });
@@ -35,7 +43,7 @@ function TwemojiTransform(node: TextNode, editor: LexicalEditor) {
     );
     const textAfterNode = new TextNode(textAfter);
 
-    const src = parseEmoji(emojis[0]);
+    const src = parseEmoji(emojis[0], twemojiOptions);
 
     editor.update(
       () => {
@@ -44,7 +52,7 @@ function TwemojiTransform(node: TextNode, editor: LexicalEditor) {
         );
         emojiNode.insertBefore(textBeforeNode);
         emojiNode.insertAfter(textAfterNode).selectStart();
-        TwemojiTransform(textAfterNode, editor);
+        TwemojiTransform(textAfterNode, editor, twemojiOptions);
       },
       {
         onUpdate: () => {
@@ -59,11 +67,11 @@ function TwemojiTransform(node: TextNode, editor: LexicalEditor) {
   }
 }
 
-function useTwemojis(editor: LexicalEditor) {
+function useTwemojis(editor: LexicalEditor, twemojiOptions: TwemojiOptions) {
   useEffect(() => {
     const removeTransform = editor.registerNodeTransform(TextNode, (node) => {
       console.log(node);
-      TwemojiTransform(node, editor);
+      TwemojiTransform(node, editor, twemojiOptions);
     });
 
     return () => {
@@ -72,9 +80,9 @@ function useTwemojis(editor: LexicalEditor) {
   }, [editor]);
 }
 
-function parseEmoji(emoji: string): string {
+function parseEmoji(emoji: string, twemojiOptions: TwemojiOptions): string {
   try {
-    const result = twemoji.parse(emoji);
+    const result = twemoji.parse(emoji, twemojiOptions);
     const parser = new DOMParser();
     const doc = parser.parseFromString(result, "text/html");
     return doc.querySelector("img").src;
@@ -84,8 +92,15 @@ function parseEmoji(emoji: string): string {
   }
 }
 
-export default function TwemojiPlugin() {
+type TwemojiPluginProps = {
+  /**
+   * Options to pass to twemoji.parse
+   */
+  twemojiOptions?: TwemojiOptions;
+};
+
+export default function TwemojiPlugin({ twemojiOptions }: TwemojiPluginProps) {
   const [editor] = useLexicalComposerContext();
-  useTwemojis(editor);
+  useTwemojis(editor, twemojiOptions);
   return null;
 }
