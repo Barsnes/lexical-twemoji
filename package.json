@@ -6,6 +6,10 @@
     "packages/*",
     "app"
   ],
+  "scripts": {
+    "start": "npm -w app start",
+    "build": "npm -w packages/lexical-twemoji run build"
+  },
   "devDependencies": {
     "@types/react": "^18.2.45",
     "react": "^18.2.0"

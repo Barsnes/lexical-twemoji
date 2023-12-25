@@ -8,7 +8,7 @@ import { $createTwemojiNode } from "./TwemojiNode";
 const regex = emojiRegex();
 function TwemojiTransform(node: TextNode, editor: LexicalEditor) {
   const textContent = node.getTextContent();
-	const nodes = [];
+  const nodes = [];
   const emojis = textContent.match(regex);
 
   if (emojis) {
@@ -18,6 +18,17 @@ function TwemojiTransform(node: TextNode, editor: LexicalEditor) {
     if (textAfter.length === 0) {
       textAfter = "\\‰}";
     }
+
+    emojis.map((emoji) => {
+      textContent.split(emoji).map((text) => {
+        if (text.length > 0) {
+          nodes.push(new TextNode(text));
+        }
+        nodes.push(
+          $createTwemojiNode("lexical-twemoji", emoji, parseEmoji(emoji))
+        );
+      });
+    });
 
     const textBeforeNode = new TextNode(
       textContent.slice(0, textContent.indexOf(emojis[0]))
@@ -33,6 +44,7 @@ function TwemojiTransform(node: TextNode, editor: LexicalEditor) {
         );
         emojiNode.insertBefore(textBeforeNode);
         emojiNode.insertAfter(textAfterNode).selectStart();
+        TwemojiTransform(textAfterNode, editor);
       },
       {
         onUpdate: () => {
@@ -49,9 +61,10 @@ function TwemojiTransform(node: TextNode, editor: LexicalEditor) {
 
 function useTwemojis(editor: LexicalEditor) {
   useEffect(() => {
-    const removeTransform = editor.registerNodeTransform(TextNode, (node) =>
-      TwemojiTransform(node, editor)
-    );
+    const removeTransform = editor.registerNodeTransform(TextNode, (node) => {
+      console.log(node);
+      TwemojiTransform(node, editor);
+    });
 
     return () => {
       removeTransform();
