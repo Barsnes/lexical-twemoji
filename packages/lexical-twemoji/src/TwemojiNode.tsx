@@ -12,30 +12,26 @@ type SerializedTwemojiNode = Spread<
 >;
 
 export class TwemojiNode extends TextNode {
-  __className: string;
-
   static getType(): string {
     return "lexical-twemoji";
   }
 
   static clone(node: TwemojiNode): TwemojiNode {
     return new TwemojiNode(
-      node.__className,
       node.__text,
       node.__src,
       node.__key
     );
   }
 
-  constructor(className: string, text: string, src: string, key: any) {
+  constructor(text: string, src: string, key: any) {
     super(text, key);
-    this.__className = className;
     this.__src = src;
   }
 
   createDOM() {
     const img = document.createElement("img");
-    img.setAttribute("class", this.__className);
+    img.setAttribute("class", "lexical-twemoji");
     img.setAttribute("data-lexical-text", "false");
     img.setAttribute("src", this.__src);
     img.setAttribute("alt", this.__text);
@@ -52,7 +48,7 @@ export class TwemojiNode extends TextNode {
     const element = document.createElement("img");
     element.setAttribute("src", this.__src);
     element.setAttribute("alt", this.__text);
-    element.setAttribute("class", this.__className);
+    element.setAttribute("class", "lexical-twemoji");
     element.setAttribute("data-emoji", this.__text);
     element.setAttribute("data-emoji-src", this.__src);
     return { element };
@@ -76,7 +72,6 @@ export class TwemojiNode extends TextNode {
     src = src.split('src="')[1].split('"')[0];
 
     const node = $createTwemojiNode(
-      "lexical-twemoji",
       serializedNode.text,
       src
     );
@@ -94,10 +89,9 @@ export class TwemojiNode extends TextNode {
 }
 
 export function $createTwemojiNode(
-  className: string,
-  emoticonText: string,
+  text: string,
   src: string
 ) {
   // @ts-ignore: TODO: fix this
-  return new TwemojiNode(className, emoticonText, src).setMode("token");
+  return new TwemojiNode(text, src).setMode("token");
 }

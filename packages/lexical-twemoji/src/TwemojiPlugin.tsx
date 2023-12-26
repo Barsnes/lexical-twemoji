@@ -12,7 +12,6 @@ function TwemojiTransform(
   twemojiOptions: TwemojiOptions
 ) {
   const textContent = node.getTextContent();
-  const nodes = [];
   const emojis = textContent.match(regex);
 
   if (emojis) {
@@ -22,21 +21,6 @@ function TwemojiTransform(
     if (textAfter.length === 0) {
       textAfter = "\\‰}";
     }
-
-    emojis.map((emoji) => {
-      textContent.split(emoji).map((text) => {
-        if (text.length > 0) {
-          nodes.push(new TextNode(text));
-        }
-        nodes.push(
-          $createTwemojiNode(
-            "lexical-twemoji",
-            emoji,
-            parseEmoji(emoji, twemojiOptions)
-          )
-        );
-      });
-    });
 
     const textBeforeNode = new TextNode(
       textContent.slice(0, textContent.indexOf(emojis[0]))
@@ -48,7 +32,7 @@ function TwemojiTransform(
     editor.update(
       () => {
         const emojiNode = node.replace(
-          $createTwemojiNode("lexical-twemoji", emojis[0], src)
+          $createTwemojiNode(emojis[0], src)
         );
         emojiNode.insertBefore(textBeforeNode);
         emojiNode.insertAfter(textAfterNode).selectStart();
